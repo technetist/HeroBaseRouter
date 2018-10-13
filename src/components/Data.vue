@@ -1,6 +1,6 @@
 <template>
   <div class="col-md-12">
-    Type: {{type}}
+    {{items}}
   </div>
 </template>
 
@@ -8,16 +8,32 @@
   export default {
     data() {
       return {
-        type: this.$route.params.type
+        type: this.$route.params.type,
+        items: [],
       }
     },
     methods: {
-      change() {
-        this.type = this.$route.params.type
+      fetchItems() {
+        this.items = [];
+        this.type = this.$route.params.type;
+        let initial_ids = [1, 4, 7];
+        for (let i in initial_ids) {
+          let id = initial_ids[i];
+          console.log('id', id);
+          fetch(
+            `https://lotrapi.co/api/v1/${this.type}/${id}`, {
+              method: 'GET'
+            })
+            .then(response => response.json())
+            .then(json => this.items.push(json))
+        }
       }
     },
+    created() {
+      this.fetchItems()
+    },
     watch: {
-      '$route': 'change'
+      '$route': 'fetchItems'
     }
   }
 </script>
