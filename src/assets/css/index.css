@@ -14,3 +14,10 @@ body {
 .link, .link:hover, .link:visited, .link:active {
   color: #4FC08D;
 }
+
+.card {
+  border: 2px solid #38ff9b;
+}
+.card:hover {
+  border: 2px solid #2da479;
+}

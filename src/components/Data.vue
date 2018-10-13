@@ -1,10 +1,17 @@
 <template>
   <div class="col-md-12">
-    {{items}}
+    <Item
+      v-for="(item, index) in items"
+      :key="index"
+      :passed-item="item"
+      :type="type"
+    />
   </div>
 </template>
 
 <script>
+  import Item from './Item';
+
   export default {
     data() {
       return {
@@ -19,7 +26,6 @@
         let initial_ids = [1, 4, 7];
         for (let i in initial_ids) {
           let id = initial_ids[i];
-          console.log('id', id);
           fetch(
             `https://lotrapi.co/api/v1/${this.type}/${id}`, {
               method: 'GET'
@@ -31,6 +37,9 @@
     },
     created() {
       this.fetchItems()
+    },
+    components: {
+      Item
     },
     watch: {
       '$route': 'fetchItems'
